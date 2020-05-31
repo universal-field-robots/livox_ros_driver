@@ -166,10 +166,14 @@ typedef struct {
 typedef struct {
   uint8_t handle;          /**< Lidar access handle. */
   uint8_t data_src;        /**< From raw lidar or livox file. */
+  uint8_t raw_data_type;   /**< The data type in eth packaet */
   bool data_is_pubulished; /**< Indicate the data of lidar whether is
-                              pubulished. */
+                                pubulished. */
+  volatile uint32_t packet_interval;/**< The time interval between packets 
+                                       of current lidar, unit:ns */
+  volatile uint32_t packet_interval_max; /**< If more than it,
+                                            have packet loss */                            
   volatile LidarConnectState connect_state;
-  uint8_t pointcloud_data_type;
   DeviceInfo info;
   LidarPacketStatistic statistic_info;
   LidarDataQueue data;

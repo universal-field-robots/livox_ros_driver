@@ -175,8 +175,10 @@ void LdsLidar::OnLidarDataCb(uint8_t handle, LivoxEthPacket *data,
          sizeof(cur_timestamp));
 
   if (kImu != eth_packet->data_type) {
-    if (p_lidar->pointcloud_data_type != eth_packet->data_type) {
-      p_lidar->pointcloud_data_type = eth_packet->data_type;
+    if (p_lidar->raw_data_type != eth_packet->data_type) {
+      p_lidar->raw_data_type = eth_packet->data_type;
+      p_lidar->packet_interval = GetPacketInterval(eth_packet->data_type);
+      p_lidar->packet_interval_max = p_lidar->packet_interval * 1.8f;
     }
     
     if (eth_packet->timestamp_type == kTimestampTypePps) {
