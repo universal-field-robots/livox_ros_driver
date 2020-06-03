@@ -177,6 +177,9 @@ uint32_t Lddc::PublishPointcloud2(LidarDataQueue *queue, uint32_t packet_num,
       //ROS_INFO("Lidar[%d] packet time interval is %ldns", handle, packet_gap);
       if (kSourceLvxFile != data_source) {
         point_base = FillZeroPointXyzrtl(point_base, storage_packet.point_num);
+        if (!published_packet) { 
+          cloud.header.stamp = ros::Time(last_timestamp / 1000000000.0);
+        }
         cloud.width += storage_packet.point_num;
         last_timestamp = last_timestamp + lidar->packet_interval;
         ++published_packet;
@@ -267,6 +270,9 @@ uint32_t Lddc::PublishPointcloudData(LidarDataQueue *queue, uint32_t packet_num,
       pcl::PointXYZI point = {0}; /* fill zero points */
       for (uint32_t i = 0; i < storage_packet.point_num; i++) {
         cloud->points.push_back(point);
+      }
+      if (!published_packet) { 
+          cloud->header.stamp = last_timestamp / 1000.0; // to pcl ros time stamp
       }
       last_timestamp = last_timestamp + lidar->packet_interval;
       ++published_packet;
