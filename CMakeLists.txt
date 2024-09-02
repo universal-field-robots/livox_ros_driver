@@ -243,6 +243,10 @@ install(TARGETS ${PROJECT_NAME}_node ${PROJECT_NAME}_nodelet
 	RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 	)
 
+install(FILES livox_ros_driver_nodelets.xml
+	DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)
+
 install(DIRECTORY
   launch
   config
