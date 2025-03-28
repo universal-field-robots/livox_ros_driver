@@ -327,6 +327,8 @@ void LdsLidar::LidarErrorStatusCb(livox_status status, uint8_t handle,
   if (message != NULL) {
     ++error_message_count;
     if (0 == (error_message_count % 100)) {
+      livox_status rb_status = RebootDevice(handle, 0, RebootCb, nullptr);
+      printf("Rebooting livox device with handle: %u\n", handle);
       printf("handle: %u\n", handle);
       printf("temp_status : %u\n", message->lidar_error_code.temp_status);
       printf("volt_status : %u\n", message->lidar_error_code.volt_status);
@@ -342,6 +344,11 @@ void LdsLidar::LidarErrorStatusCb(livox_status status, uint8_t handle,
       printf("system_status : %u\n", message->lidar_error_code.system_status);
     }
   }
+}
+
+void LdsLidar::RebootCb(livox_status status, uint8_t handle,
+                        uint8_t response, void *clent_data) {
+  printf("Device has rebooted!\n");
 }
 
 void LdsLidar::ControlFanCb(livox_status status, uint8_t handle,

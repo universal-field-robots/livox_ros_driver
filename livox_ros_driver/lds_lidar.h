@@ -74,6 +74,8 @@ class LdsLidar : public Lds {
                                  ErrorMessage *message);
   static void ControlFanCb(livox_status status, uint8_t handle,
                            uint8_t response, void *clent_data);
+  static void RebootCb(livox_status status, uint8_t handle,
+                           uint8_t response, void *clent_data);
   static void SetPointCloudReturnModeCb(livox_status status, uint8_t handle,
                                         uint8_t response, void *clent_data);
   static void SetCoordinateCb(livox_status status, uint8_t handle,
